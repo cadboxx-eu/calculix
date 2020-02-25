@@ -2,6 +2,7 @@
 let challenge = {
     numberOne: undefined,
     numberTwo: undefined,
+    table: false, // becomes true when user selects a specific table to train on
     score: 0,
     idealScore: 0,
     count: 0,
@@ -14,6 +15,7 @@ window.addEventListener('load', function () {
     /* run a new challenge */
     if (challenge.count == 0) newChallenge();
     document.querySelector('#answer-input').focus(); // put cursor back in focus
+    document.querySelector('#table-select').addEventListener('change', setTable);
     document.addEventListener("keydown", enterPress); // can also press enter to verify answer
     document.querySelector('#submit').addEventListener('click', verifyAnswer); // verify answer
     document.querySelector('#skip').addEventListener('click', skipChallenge); // skip a challenge
@@ -29,18 +31,18 @@ function verifyAnswer(evt) {
         success();
         input.value = ''; // clear input
         challenge.rnd = true; // generate new random numbers, answer was correct
-        setTimeout(newChallenge, 4000);
+        setTimeout(newChallenge, 3000);
     } else {
         fail();
         input.value = '';
         challenge.rnd = false; // run same numbers, answer was wrong
-        setTimeout(newChallenge, 4000);
+        setTimeout(newChallenge, 3000);
         input.focus();
     }
 }
 
 function getRandomNumber() {
-    let randomNumber = (Math.floor(Math.random() * 9)) + 1; // number 1-9
+    let randomNumber = (Math.floor(Math.random() * 10)) + 1; // number 1-9
     return randomNumber;
 }
 
@@ -48,10 +50,12 @@ function newChallenge(random = true) {
     document.querySelector('#answer-input').focus();
     if (challenge.count == 10) refresh(); // new 'game' after 10 challenges, reset challenge object to initial state
     clearMsg(); // empty message box
-    /* set new (random) numbers for challenge if 'true' i.e. correct answer was given */
-    if (challenge.rnd === true) {
+    /* set new (random) numbers for challenge if 'true' i.e. correct answer was given - challenge.table equals true if user selected a specific table to train on*/
+    if (challenge.rnd === true && challenge.table === false) {
         challenge.numberOne = getRandomNumber();
         challenge.numberTwo = getRandomNumber();
+    } else if (challenge.rnd === true && challenge.table === true) { // user selected a table to train on, so we do not change numberTwo.
+        challenge.numberOne = getRandomNumber();
     }
     let one = document.querySelector('#one');
     one.textContent = challenge.numberOne;
@@ -135,5 +139,16 @@ function getScore(win = true) {
 function skipChallenge() {
     challenge.rnd = true; // when we skip, we want a fresh set of numbers
     newChallenge();
+}
+
+/* user can select a specific table to train on */
+function setTable() {
+    let tableChoice = document.querySelector('#table-choice');
+    let selectedTable = tableChoice.options[tableChoice.selectedIndex].value;
+    if (selectedTable !== "") {
+        challenge.numberTwo = selectedTable;
+        challenge.table = true; // set flag, user wants to train a specific table
+        newChallenge();
+    }
 }
 

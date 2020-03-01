@@ -166,14 +166,19 @@ function setTable() {
   }
 }
 
+/*
+ * User can switch instantaneously between multiplications(*), additions(+) and subtractions(-)
+ * Use setMode() to set the operator 'mode' to: '*', or '+' or '-'
+ * When in '*' mode, we show the table select box, when in '+' or '-' we hide the box
+ */
 function setMode() {
   let mode = document.querySelector('#mode');
   challenge.operator = mode.options[mode.selectedIndex].value;
   if(challenge.operator !== '*') challenge.table = false; // turn off the fixed numberTwo (if set) when user changes from multiplication to additions or subtractions
   let tableChoice = document.querySelector('#table-choice');
-  tableChoice.options.selectedIndex = 0; // reset the selected table to default ("Je choisis ma table!")
+  tableChoice.options.selectedIndex = 0; // reset the selected table option value to show default ("Je choisis ma table!")
   let tableSelect = document.querySelector('#table-select');
-  tableSelect.style.visibility = (challenge.operator !== "*") ? "hidden" : "visible";  // only show table select in '*' mode
+  tableSelect.style.visibility = (challenge.operator !== "*") ? "hidden" : "visible";  // only show multiplication table select box in '*' mode
   newChallenge();
 }
 

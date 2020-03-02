@@ -53,16 +53,20 @@ body {
 
 /* input elements: #check, #next */
 #container > div > input {
-    background-color: #fbeec1;
+    background-color: #daad86;
     max-width: 10vw;
     padding: 10px;
-    font-size: 2vw;
     text-align: center;
-    font-family: "Agency FB", "Comic Sans", cursive;
+    font-family: 'Caveat';
+    font-size: 0.6em;
     border: none;
     color: rebeccapurple;
 }
 
+#container > div > input:hover {
+    /* background-color: royalblue; */
+    color: white;
+}
 
 #answer #answer-input {
     font-family: "Comic Sans MS", "Comic Sans", cursive !important;
@@ -72,7 +76,6 @@ body {
     border: none;
     font-size: 5vw !important;
 }
-
 
 #number-one {
     background-color: #808080 !important;
@@ -106,8 +109,9 @@ body {
 
 #score {
     font-size: 3vw !important;
-    font-family: "Agency FB", "Comic Sans", cursive;
-    color: rebeccapurple;
+    /* font-family: "Agency FB", "Comic Sans", cursive; */
+    font-family: 'Bungee Shade';
+    color: #468b1f;
     grid-column: 1/3;
     grid-row: 3/4;
 }
